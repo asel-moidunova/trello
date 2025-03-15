@@ -14,8 +14,10 @@ const Login = () => {
           id="outlined-basic"
           label="Введите адрес электронной почты"
           variant="outlined"
+          width="100%"
+          height="20px"
           fullWidth
-          sx={{ marginBottom: "10px" }}
+          sx={{ marginBottom: "10px",fontSize: "10px" }}
         />
 
         <RememberMe>
@@ -32,7 +34,7 @@ const Login = () => {
         <SocialButton>
           <img
             src="/assets/image/login-images/google.logo.svg"
-            alt=""
+            alt="google"
             width={20}
           />
           Google
@@ -40,7 +42,7 @@ const Login = () => {
         <SocialButton>
           <img
             src="/assets/image/login-images/microsoft.logo.svg"
-            alt=""
+            alt="microsoft"
             width={20}
           />
           Microsoft
@@ -48,7 +50,7 @@ const Login = () => {
         <SocialButton>
           <img
             src="/assets/image/login-images/apple.logo.svg"
-            alt=""
+            alt="apple"
             width={20}
           />
           Apple
@@ -56,7 +58,7 @@ const Login = () => {
         <SocialButton>
           <img
             src="/assets/image/login-images/slack.logo.svg"
-            alt=""
+            alt="slack"
             width={20}
           />
           Slack
@@ -73,8 +75,7 @@ const Login = () => {
           Один аккаунт для Trello, Jira, Confluence и не только. <br />
           <span>Политика конфиденциальности</span>
           <span>Уведомление пользователя</span>
-          Для защиты сайта используется система reCAPTCHA.
-          Кроме того, действуют
+          Для защиты сайта используется система reCAPTCHA. Кроме того, действуют
           положения Политики конфиденциальности и Условий использования Google.
         </FooterText>
       </RegistrDiv>
@@ -96,6 +97,7 @@ const MainDiv = styled.div`
 
 const RegistrDiv = styled.div`
   display: flex;
+  
   flex-direction: column;
   align-items: center;
   background-color: white;
@@ -103,7 +105,7 @@ const RegistrDiv = styled.div`
   padding: 20px;
   text-align: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 350px;
   border-radius: 10px;
 `;
 
@@ -165,8 +167,7 @@ const FooterText = styled.span`
   color: gray;
   text-align: center;
   width: 460px;
-  matgin: 20px auto;
-  
+  margin: 20px auto;
 `;
 
 const ImgBg1 = styled.img`
@@ -182,4 +183,3 @@ const ImgBg2 = styled.img`
   right: 0;
   height: 350px;
 `;
-
