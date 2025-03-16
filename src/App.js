@@ -1,10 +1,94 @@
+import React from 'react'
+import Login from './presentation/pages/Login'
+import Allproject from './routes/Allproject'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      
+    <div>
+
+      <Login/>
+      <Allproject/>
+      <div id='modal-root'></div>
+
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
