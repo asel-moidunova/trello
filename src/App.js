@@ -5,6 +5,7 @@ import Allproject from './routes/Allproject'
 const App = () => {
   return (
     <div>
+
       <Login/>
       <Allproject/>
       <div id='modal-root'></div>
