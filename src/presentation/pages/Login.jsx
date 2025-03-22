@@ -8,7 +8,7 @@ const Login = () => {
 
   const onSuccess = (response) => {
     console.log('Login Success:', response);
-    navigate('/usergi'); 
+    navigate('/user'); 
   };
 
   const handleSocialLogin = (provider) => {
