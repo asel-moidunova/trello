@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const NavMain = () => {
   const navigate = useNavigate()
   const showMenu = () => {
-    navigate("menu")
+    navigate("/menu")
   }
   return (
     <Nav>

@@ -1,4 +1,6 @@
 import { Button, Checkbox, TextField } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -29,6 +31,21 @@ const Register = () => {
     setShowPasswordField(emailRegex.test(email));
   }, [email]);
 
+const Login = () => {
+  const navigate = useNavigate();
+
+  const onSuccess = (response) => {
+    console.log('Login Success:', response);
+    navigate('/user'); 
+  };
+
+  const handleSocialLogin = (provider) => {
+    console.log(`Logging in with ${provider}`);
+    if (provider === 'google') {
+      onSuccess({ provider });
+    }
+  };
+
   return (
     <MainDiv>
       <BgImg1 src="/assets/image/login-images/back.img1.png" alt="" />
@@ -40,6 +57,8 @@ const Register = () => {
           label="Введите адрес электронной почты"
           variant="outlined"
           fullWidth
+          sx={{ marginBottom: "10px", fontSize: "10px" }}
+
           sx={{ marginBottom: "10px" }}
           {...register("email", { 
             required: "Поле email обязательно",
@@ -47,6 +66,7 @@ const Register = () => {
           })}
           error={!!errors.email}
           helperText={errors.email ? errors.email.message : ''}
+
         />
 
         {showPasswordField && (
@@ -69,11 +89,52 @@ const Register = () => {
           <span>Запомнить меня</span>
         </RememberMe>
 
+
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={onSuccess}>
+
         <Button variant="contained" color="primary" fullWidth onClick={handleSubmit(onSubmit)}>
+
           Продолжить
-        </Button>
+         </Button>
+         
 
         <Divider>Или зарегистрироваться с помощью</Divider>
+
+
+        <SocialButton onClick={() => handleSocialLogin('google')}>
+          <img
+            src="/assets/image/login-images/google.logo.svg"
+            alt="google"
+            width={20}
+          />
+          Google
+        </SocialButton>
+        <SocialButton onClick={() => handleSocialLogin('microsoft')}>
+          <img
+            src="/assets/image/login-images/microsoft.logo.svg"
+            alt="microsoft"
+            width={20}
+          />
+          Microsoft
+        </SocialButton>
+        <SocialButton onClick={() => handleSocialLogin('apple')}>
+          <img
+            src="/assets/image/login-images/apple.logo.svg"
+            alt="apple"
+            width={20}
+          />
+          Apple
+        </SocialButton>
+        <SocialButton onClick={() => handleSocialLogin('slack')}>
+          <img
+            src="/assets/image/login-images/slack.logo.svg"
+            alt="slack"
+            width={20}
+          />
 
         <SocialButton>
           <img src="/assets/image/login-images/google.logo.svg" alt="google" width={20} />
@@ -89,6 +150,7 @@ const Register = () => {
         </SocialButton>
         <SocialButton>
           <img src="/assets/image/login-images/slack.logo.svg" alt="slack" width={20} />
+
           Slack
         </SocialButton>
 
@@ -120,6 +182,7 @@ const MainDiv = styled.div`
   background-color: rgb(235, 239, 240);
   height: 100vh;
   position: relative;
+  overflow: hidden;
 `;
 
 const RegistrDiv = styled.div`
@@ -132,9 +195,17 @@ const RegistrDiv = styled.div`
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   width: 350px;
   border-radius: 10px;
+
+  position: relative;
+  z-index: 1;
+`;
+
+const ImgLogo = styled.img`
+  width: 150px;
+  margin-bottom: 10px;
   margin-top: -10vh;
   position: relative;
-`;
+`
 
 const RememberMe = styled.div`
   display: flex;
@@ -152,6 +223,9 @@ const SocialButton = styled(Button).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
+
+  text-transform: none !important;
+  margin-bottom: 10px;
   text-transform: none;
   margin-bottom: 15px;
   gap: 10px;
@@ -187,13 +261,9 @@ const ImgAt = styled.img`
 const FooterText = styled.span`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  bottom: 0;
   font-size: 12px;
   color: gray;
   text-align: center;
-  width: 460px;
-  margin: 20px auto;
 `;
 
 const BgImg1 = styled.img`
@@ -201,6 +271,7 @@ const BgImg1 = styled.img`
   bottom: 0;
   left: 0;
   height: 350px;
+  z-index: 0;
 `;
 
 const BgImg2 = styled.img`
@@ -208,6 +279,7 @@ const BgImg2 = styled.img`
   bottom: 0;
   right: 0;
   height: 350px;
+  z-index: 0;
 `;
 
 const ImgLogo = styled.img`
