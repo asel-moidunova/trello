@@ -7,7 +7,6 @@ const App = () => {
     <div>
       <Allproject/>
       <div id='modal-root'></div>
-      
     </div>
   )
 }
