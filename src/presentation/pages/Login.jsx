@@ -1,35 +1,7 @@
 import { Button, Checkbox, TextField } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router";
-import React, { useState } from "react";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../data/firebase'; 
-import { useDispatch } from "react-redux";
-import { setUser, setError } from "../../store/slice/UserSlice"; 
-
-const Register = () => {
-  const dispatch = useDispatch();
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
-  const [showPasswordField, setShowPasswordField] = useState(false);
-
-  const email = watch("email");
-
-  const onSubmit = (data) => {
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
-        dispatch(setUser(userCredential.user));
-      })
-      .catch((error) => {
-        dispatch(setError(error.message));
-      });
-  };
-
-  React.useEffect(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setShowPasswordField(emailRegex.test(email));
-  }, [email]);
 
 const Login = () => {
   const navigate = useNavigate();
@@ -48,62 +20,36 @@ const Login = () => {
 
   return (
     <MainDiv>
-      <BgImg1 src="/assets/image/login-images/back.img1.png" alt="" />
+      <ImgBg1 src="/assets/image/login-images/back.img1.png" alt="" />
       <RegistrDiv>
-        <ImgLogo src="/assets/image/login-images/Trello_logo.png" alt="dfghj" />
-        <h3>Зарегистрируйтесь, чтобы продолжить</h3>
+        <ImgLogo src="/assets/image/login-images/trello-logo.png" alt="" />
+        <h3>Войдите, чтобы продолжить</h3>
 
         <TextField
+          id="outlined-basic"
           label="Введите адрес электронной почты"
           variant="outlined"
+          width="100%"
+          height="20px"
           fullWidth
           sx={{ marginBottom: "10px", fontSize: "10px" }}
-
-          sx={{ marginBottom: "10px" }}
-          {...register("email", { 
-            required: "Поле email обязательно",
-            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Неверный формат email" }
-          })}
-          error={!!errors.email}
-          helperText={errors.email ? errors.email.message : ''}
-
         />
-
-        {showPasswordField && (
-          <TextField
-            label="Пароль"
-            type="password"
-            fullWidth
-            sx={{ marginBottom: "10px" }}
-            {...register("password", { 
-              required: "Поле пароля обязательно", 
-              minLength: { value: 6, message: "Пароль должен содержать не менее 6 символов" } 
-            })}
-            error={!!errors.password}
-            helperText={errors.password ? errors.password.message : ''}
-          />
-        )}
 
         <RememberMe>
           <Checkbox />
           <span>Запомнить меня</span>
         </RememberMe>
 
-
         <Button
           variant="contained"
           color="primary"
           fullWidth
           onClick={onSuccess}>
-
-        <Button variant="contained" color="primary" fullWidth onClick={handleSubmit(onSubmit)}>
-
           Продолжить
          </Button>
          
 
-        <Divider>Или зарегистрироваться с помощью</Divider>
-
+        <Divider>Или продолжить с помощью</Divider>
 
         <SocialButton onClick={() => handleSocialLogin('google')}>
           <img
@@ -135,27 +81,12 @@ const Login = () => {
             alt="slack"
             width={20}
           />
-
-        <SocialButton>
-          <img src="/assets/image/login-images/google.logo.svg" alt="google" width={20} />
-          Google
-        </SocialButton>
-        <SocialButton>
-          <img src="/assets/image/login-images/microsoft.logo.svg" alt="microsoft" width={20} />
-          Microsoft
-        </SocialButton>
-        <SocialButton>
-          <img src="/assets/image/login-images/apple.logo.svg" alt="apple" width={20} />
-          Apple
-        </SocialButton>
-        <SocialButton>
-          <img src="/assets/image/login-images/slack.logo.svg" alt="slack" width={20} />
-
           Slack
         </SocialButton>
 
         <Links>
-          <p>Уже есть аккаунт? <a href="#">Войти</a></p>
+          <span>Не удается войти в систему?</span>
+          <span>Создать аккаунт</span>
         </Links>
 
         <hr color="black" />
@@ -168,12 +99,12 @@ const Login = () => {
           положения Политики конфиденциальности и Условий использования Google.
         </FooterText>
       </RegistrDiv>
-      <BgImg2 src="/assets/image/login-images/back.image2.sign-up.svg" alt="" />
+      <ImgBg2 src="/assets/image/login-images/back.image2.sign-up.svg" alt="" />
     </MainDiv>
   );
 };
 
-export default Register;
+export default Login;
 
 const MainDiv = styled.div`
   display: flex;
@@ -190,12 +121,12 @@ const RegistrDiv = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  padding: 30px;
+  color: black;
+  padding: 20px;
   text-align: center;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 350px;
   border-radius: 10px;
-
   position: relative;
   z-index: 1;
 `;
@@ -203,16 +134,14 @@ const RegistrDiv = styled.div`
 const ImgLogo = styled.img`
   width: 150px;
   margin-bottom: 10px;
-  margin-top: -10vh;
-  position: relative;
-`
+`;
 
 const RememberMe = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: flex-start;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const SocialButton = styled(Button).attrs({
@@ -223,16 +152,9 @@ const SocialButton = styled(Button).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
-
   text-transform: none !important;
   margin-bottom: 10px;
-  text-transform: none;
-  margin-bottom: 15px;
   gap: 10px;
-  height: 40px;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
 `;
 
 const Divider = styled.span`
@@ -266,7 +188,7 @@ const FooterText = styled.span`
   text-align: center;
 `;
 
-const BgImg1 = styled.img`
+const ImgBg1 = styled.img`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -274,15 +196,10 @@ const BgImg1 = styled.img`
   z-index: 0;
 `;
 
-const BgImg2 = styled.img`
+const ImgBg2 = styled.img`
   position: absolute;
   bottom: 0;
   right: 0;
   height: 350px;
   z-index: 0;
-`;
-
-const ImgLogo = styled.img`
-  width: 100px;
-  margin-bottom: 20px;
 `;
