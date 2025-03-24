@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import Button from "../../UI/Button";
 import { addTask } from "../../store/slice/TestSlice";
 import { useDispatch, useSelector } from "react-redux";
-import AddInnerTask from "../Tasks/InnerTest";
+import AddInnerTask from "./InnerTest";
 
 const AddTest = (props) => {
   const { tasks, searchInputValue } = useSelector((state) => state.task);
@@ -12,16 +12,16 @@ const AddTest = (props) => {
   const [value, setValue] = useState("");
   const [textareaActive, setTextareaActive] = useState(false);
 
-  const filteredTasks = tasks.filter((el) => 
+  const filteredTasks = tasks.filter((el) =>
     el.title.toLowerCase().includes(searchInputValue.toLowerCase())
-  )
+  );
 
   console.log(filteredTasks);
   console.log(tasks);
 
   const clickHandler = (e) => {
     props.inputTrue();
-    blockTextarea()
+    blockTextarea();
     e.stopPropagation();
   };
   const clickHandlerr = (e) => {
@@ -63,14 +63,14 @@ const AddTest = (props) => {
           blockTextarea={blockTextarea}
           textareaActive={textareaActive}
           title={el.title}
-          id = {el.id}
+          id={el.id}
         />
       ))}
       <WrapperTask state={props.inputActive} onClick={clickHandler}>
         {!props.inputActive && (
           <span>
             <FaPlus />
-            Добавить список
+            Добавьте еще одну колонку
           </span>
         )}
         {props.inputActive && (
@@ -90,8 +90,7 @@ const AddTest = (props) => {
                 Добавить список
               </Button>
               <CloseInput onClick={clickHandlerr}>
-              <i class="fa-solid fa-left-right"></i>
-
+                <i class="fa-solid fa-xmark"></i>
               </CloseInput>
             </div>
           </InputWithButton>
@@ -133,7 +132,6 @@ const WrapperTask = styled.div`
 
 const CloseInput = styled.div`
   border-radius: 4px;
-  /* padding: 4px; */
   &:hover {
     background-color: #2e3133;
   }

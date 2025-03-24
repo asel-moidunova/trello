@@ -1,9 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './store/slice/UserSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import taskReducer from "./store/slice/TestSlice"
+import backgroundReducer from "./store/slice/BackgrounSlice"; 
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    task: taskReducer,
+    backgroundImage: backgroundReducer, 
   },
 });
 

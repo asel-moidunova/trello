@@ -3,122 +3,119 @@ import { FaPlus } from "react-icons/fa";
 import { styled } from "styled-components";
 import Buttonn from "../../UI/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { addInnerTask, toggleInnerTask } from "../../store/slice/TestSlice";
+import {
+  addInnerTask,
+  deleteInnerTask,
+  toggleInnerTask,
+} from "../../store/slice/TestSlice";
 
 const InnerTest = (props) => {
   const { tasks, searchInputValue } = useSelector((state) => state.task);
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
   const [editingValue, setEditingValue] = useState("");
 
   const filteredTasks = tasks.filter((el) =>
     el.title.toLowerCase().includes(searchInputValue.toLowerCase())
   );
-  const innerTaskValue = (e) => {
-    setValue(e.target.value);
-  };
 
   const data = filteredTasks.find((el) => el.id === props.id);
+
   const clickHandler = () => {
-    const obj = {
-      id: props.id,
-      innerTask: value,
-    };
     if (value.trim().length > 0) {
-      dispatch(addInnerTask(obj));
+      dispatch(addInnerTask({ id: props.id, innerTask: value }));
+      setValue("");
     }
-    setValue("");
   };
 
-  const editInnerTask = (id) => {
-    console.log(id);
-    setIsEditing(true);
-  };
-
-  const onchangeEditinText = (e) => {
-    setEditingValue(e.target.value);
+  const editInnerTask = (task) => {
+    setEditingTask(task.id);
+    setEditingValue(task.innerTask);
   };
 
   const saveEditingValue = (id) => {
-    dispatch(toggleInnerTask({ editingValue, id, parentId: props.id }));
-    // const obj = {
-    //     id,
-    //     editingValue,
-    //     parentId: props.id
-    // }
-    setIsEditing(false);
+    dispatch(toggleInnerTask({ id, parentId: props.id, editingValue }));
+    setEditingTask(null);
+  };
+
+  const deleteTask = (id) => {
+    dispatch(deleteInnerTask({ id, parentId: props.id }));
   };
 
   return (
     <Wrapper>
       <span>{props.title}</span>
       {data.innerTask.map((el) => (
-        <>
-          {isEditing && (
+        <div key={el.id}>
+          {editingTask === el.id ? (
             <EditTask>
-              <textarea onChange={onchangeEditinText} cols="24" rows="3">
-                {el.innerTask}
-              </textarea>
+              <textarea
+                value={editingValue}
+                onChange={(e) => setEditingValue(e.target.value)}
+                cols="24"
+                rows="3"
+              />
               <Buttonn
+                backgroundColor="green"
+                color="white"
+                
                 onClick={() => saveEditingValue(el.id)}
-                variant="contained"
               >
-                <span>Сохранить</span>
+                Сохранить
+              </Buttonn>
+                <Buttonn backgroundColor="red"
+               marginTop="10px" 
+                color="white"
+
+                 onClick={() => deleteTask(el.id)}>
+                Удалить
               </Buttonn>
             </EditTask>
-          )}
-          {!isEditing && (
-            <InnerTask draggable={true}>
+          ) : (
+            <InnerTask>
               <span>{el.innerTask}</span>
-              <span onClick={() => editInnerTask(el.id)} className="edit">
+              <span onClick={() => editInnerTask(el)} className="edit">
                 <i class="fa-solid fa-pen-to-square"></i>
               </span>
             </InnerTask>
           )}
-        </>
+        </div>
       ))}
-      {!props.textareaActive && (
-        <ButtonInnerTask>
-          <Buttonn
-            onClick={props.showTextarea}
-            width="16em"
-            variant="contained"
-            backgroundColor="#000000"
-          >
-            <FaPlus />
-            <span>Добавить карточку</span>
-          </Buttonn>
-        </ButtonInnerTask>
-      )}
 
-      {props.textareaActive && (
+      {props.textareaActive ? (
         <>
           <div>
             <textarea
               value={value}
-              onChange={innerTaskValue}
+              onChange={(e) => setValue(e.target.value)}
               cols="24"
               rows="3"
               placeholder="Ввести заголовок для карточки"
-            ></textarea>
+            />
           </div>
           <ButtonInerTask>
-            <Buttonn onClick={clickHandler} variant="contained">
-              <span>Добавить карточку</span>
-            </Buttonn>
-
+            <Buttonn onClick={clickHandler}>Добавить карточку</Buttonn>
             <p onClick={props.blockTextarea}>
-              <i class="fa-solid fa-left-right"></i>
+              {" "}
+              <i class="fa-solid fa-xmark"></i>{" "}
             </p>
           </ButtonInerTask>
         </>
+      ) : (
+        <ButtonInnerTask>
+          <Buttonn onClick={props.showTextarea} backgroundColor="#000000">
+            <FaPlus />
+            <span>Добавить  карточку</span>
+          </Buttonn>
+        </ButtonInnerTask>
       )}
     </Wrapper>
   );
 };
 
 export default InnerTest;
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -200,3 +197,5 @@ const ButtonInerTask = styled.div`
     font-size: 11px;
   }
 `;
+
+

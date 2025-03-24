@@ -1,8 +1,6 @@
 import { styled } from "styled-components";
 import Trello_logo from "../pages/menu/icon/trello-logo.png";
 import Buttonn from "../UI/Button";
-import GoogleIcon from "../pages/menu/icon/GoogleIcon.jpg";
-import DownArrowIcon from "../pages/menu/icon/DownArrowIcon.webp";
 import { useDispatch } from "react-redux";
 import { filterTask } from "../store/slice/TestSlice";
 
@@ -17,26 +15,25 @@ const Header = () => {
     <HeaderStyled>
       <nav>
         <Menu_Icon>
-          {/* <img src={CandyBox_Icon} alt="" /> */}
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </Menu_Icon>
         <TrelloIcon src={Trello_logo} alt="" />
         <NavLinks>
           <div>
             <span>Рабочие пространства</span>
-            <img src={DownArrowIcon} alt="" />
+            <i class="fa-solid fa-angle-down"></i>
           </div>
           <div>
             <span>Недавние</span>
-            <img src={DownArrowIcon} alt="" />
+            <i class="fa-solid fa-angle-down"></i>
           </div>
           <div>
             <span>В избранном</span>
-            <img src={DownArrowIcon} alt="" />
+            <i class="fa-solid fa-angle-down"></i>
           </div>
           <div>
             <span>Шаблоны</span>
-            <img src={DownArrowIcon} alt="" />
+            <i class="fa-solid fa-angle-down"></i>
           </div>
         </NavLinks>
         <Buttonn
@@ -83,9 +80,6 @@ const Header = () => {
               d="M12 20V4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
             ></path>
           </svg>
-        </span>
-        <span>
-          <MyProfil src={GoogleIcon} alt="GoogleIcon" />
         </span>
       </SearchAndSettings>
     </HeaderStyled>
@@ -197,8 +191,5 @@ const SearchInput = styled.div`
   }
 `;
 
-const MyProfil = styled.img`
-  height: 21px;
-  width: 21px;
-  filter: invert(70%);
-`;
+
+

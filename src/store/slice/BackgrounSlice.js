@@ -1,18 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import BackgroundImg from "../image/BackgroundImg.jpg";
-
 const BackgrounSlice = createSlice({
   name: "backgroundImage",
   initialState: {
-    url: BackgroundImg
+    url: "backgroundImage",
   },
   reducers: {
-    changeBackground: (state, action) => {
-      console.log(action.payload);
+    setBackgroundUrl: (state, action) => {
       state.url = action.payload;
     },
   },
 });
 
-export const { changeBackground } = BackgrounSlice.actions;
+export const { setBackgroundUrl } = BackgrounSlice.actions;
 export default BackgrounSlice.reducer;
