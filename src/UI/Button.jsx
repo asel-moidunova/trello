@@ -4,7 +4,7 @@ import React from "react";
 const Buttonn = (props) => {
   
   return (
-    <Button
+    <Button 
       style={props}
       size={props.size}
       variant={props.variant}

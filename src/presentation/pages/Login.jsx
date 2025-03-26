@@ -8,7 +8,7 @@ const Login = () => {
 
   const onSuccess = (response) => {
     console.log('Login Success:', response);
-    navigate('/user'); 
+    navigate('/home'); 
   };
 
   const handleSocialLogin = (provider) => {

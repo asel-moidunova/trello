@@ -5,14 +5,14 @@ import DownArrowIcon from "../pages/menu/icon/DownArrowIcon.webp";
 import { useNavigate } from "react-router-dom";
 
 const NavMain = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const showMenu = () => {
-    navigate("/menu")
-  }
+    navigate("/menu");
+  };
   return (
     <Nav>
       <div className="firstCont">
-        <span className="blackboardName">MyBlackboard</span>
+        <span className="blackboardName">Моя доска Trello</span>
         <span className="selectedBlackboard">
           <svg
             filter="invert(99%)"
@@ -90,14 +90,12 @@ const NavMain = () => {
               fill="currentColor"
             ></path>
           </svg>
-          <span>Улучшения</span>
         </div>
         <div>
           <img
             src="https://cdn-icons-png.flaticon.com/512/59/59192.png?w=360"
             alt=""
           />
-          <span>Автоматизация</span>
         </div>
         <div>
           <svg
@@ -120,7 +118,7 @@ const NavMain = () => {
         </div>
         <div>
           <svg
-          onClick={showMenu}
+            onClick={showMenu}
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -142,74 +140,73 @@ const NavMain = () => {
 export default NavMain;
 
 const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  color: #ffffff;
+  width: 100%;
+  padding: 10px;
+  background-color: black;
+  opacity: 0.5;
+  & .firstCont {
+    display: flex;
+    align-items: center;
+    width: 45%;
+    justify-content: space-between;
+    & .blackboardName {
+      font-weight: 900;
+      font-size: 18px;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: #383838;
+      }
+    }
+    & .selectedBlackboard {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      justify-content: center;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: #383838;
+      }
+    }
+    & .span {
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      &:hover {
+        background-color: #383838;
+      }
+    }
+  }
+  & .secondCont {
     display: flex;
     justify-content: space-between;
-    color: #ffffff;
-    width: 100%;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.1);
-    /* filter: invert(10%); */
-    opacity: 0.5;
-    & .firstCont {
+    align-items: center;
+    width: 31%;
+    & div {
       display: flex;
       align-items: center;
-      width: 45%;
-      justify-content: space-between;
-      & .blackboardName {
-        font-weight: 900;
-        font-size: 18px;
-        padding: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-        &:hover {
-          background-color: #383838;
-        }
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      & img {
+        padding: 3px;
+        filter: invert(99%);
+        width: 18px;
       }
-      & .selectedBlackboard {
-        display: flex;
-        align-items: center;
-        padding: 5px;
-        justify-content: center;
-        border-radius: 5px;
-        cursor: pointer;
-        &:hover {
-          background-color: #383838;
-        }
-      }
-      & .span {
-        cursor: pointer;
-        padding: 5px;
-        border-radius: 5px;
-        &:hover {
-          background-color: #383838;
-        }
+      &:hover {
+        background-color: #383838;
       }
     }
-    & .secondCont {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 31%;
-      & div {
-        display: flex;
-        align-items: center;
-        padding: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-        & img {
-          padding: 3px;
-          filter: invert(99%);
-          width: 18px;
-        }
-        &:hover {
-          background-color: #383838;
-        }
-      }
-      & svg {
-        filter: invert(95%);
-      }
+    & svg {
+      filter: invert(95%);
     }
-`
+  }
+`;
 
 const DownArrowIconn = styled.span`
   border-radius: 5px;
