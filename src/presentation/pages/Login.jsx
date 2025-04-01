@@ -50,6 +50,7 @@ const Login = () => {
          
 
         <Divider>Или продолжить с помощью</Divider>
+        <SocialButtons>
 
         <SocialButton onClick={() => handleSocialLogin('google')}>
           <img
@@ -83,6 +84,7 @@ const Login = () => {
           />
           Slack
         </SocialButton>
+        </SocialButtons>
 
         <Links>
           <span>Не удается войти в систему?</span>
@@ -203,3 +205,9 @@ const ImgBg2 = styled.img`
   height: 350px;
   z-index: 0;
 `;
+
+ const SocialButtons= styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;`
