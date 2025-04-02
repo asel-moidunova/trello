@@ -1,89 +1,99 @@
 import { Button, Checkbox, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { setError, setUser } from "../../store/slice/UserSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [needsPassword, setNeedsPassword] = useState(false);
 
-  const onSuccess = (response) => {
-    console.log('Login Success:', response);
-    navigate('/home'); 
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setNeedsPassword(value.includes("@gmail.com"));
+  };
+
+  const handleLogin = () => {
+    if (needsPassword && !password) {
+      dispatch(setError("Введите пароль!"));
+      return;
+    }
+
+    // Имитируем запрос на сервер
+    if (email === "test@gmail.com" && password === "123456") {
+      dispatch(setUser({ email }));
+      navigate("/home"); // Переход на главную страницу
+    } else {
+      dispatch(setError("Неверный email или пароль"));
+    }
   };
 
   const handleSocialLogin = (provider) => {
     console.log(`Logging in with ${provider}`);
-    if (provider === 'google') {
-      onSuccess({ provider });
-    }
+    dispatch(setUser({ email: `${provider}@social.com` }));
+    navigate("/home");
   };
 
   return (
     <MainDiv>
       <ImgBg1 src="/assets/image/login-images/back.img1.png" alt="" />
       <RegistrDiv>
-        <ImgLogo src="/assets/image/login-images/trello-logo.png" alt="" />
+        <ImgLogo src="/assets/image/login-images/Trello_logo.png" alt="trello-logo" />
         <h3>Войдите, чтобы продолжить</h3>
 
         <TextField
-          id="outlined-basic"
           label="Введите адрес электронной почты"
           variant="outlined"
-          width="100%"
-          height="20px"
           fullWidth
-          sx={{ marginBottom: "10px", fontSize: "10px" }}
+          value={email}
+          onChange={handleEmailChange}
+          sx={{ marginBottom: "10px" }}
         />
+
+        {needsPassword && (
+          <TextField
+            type="password"
+            label="Введите пароль"
+            variant="outlined"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            sx={{ marginBottom: "10px" }}
+          />
+        )}
 
         <RememberMe>
           <Checkbox />
           <span>Запомнить меня</span>
         </RememberMe>
 
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={onSuccess}>
+        <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
           Продолжить
-         </Button>
-         
+        </Button>
 
         <Divider>Или продолжить с помощью</Divider>
         <SocialButtons>
-
-        <SocialButton onClick={() => handleSocialLogin('google')}>
-          <img
-            src="/assets/image/login-images/google.logo.svg"
-            alt="google"
-            width={20}
-          />
-          Google
-        </SocialButton>
-        <SocialButton onClick={() => handleSocialLogin('microsoft')}>
-          <img
-            src="/assets/image/login-images/microsoft.logo.svg"
-            alt="microsoft"
-            width={20}
-          />
-          Microsoft
-        </SocialButton>
-        <SocialButton onClick={() => handleSocialLogin('apple')}>
-          <img
-            src="/assets/image/login-images/apple.logo.svg"
-            alt="apple"
-            width={20}
-          />
-          Apple
-        </SocialButton>
-        <SocialButton onClick={() => handleSocialLogin('slack')}>
-          <img
-            src="/assets/image/login-images/slack.logo.svg"
-            alt="slack"
-            width={20}
-          />
-          Slack
-        </SocialButton>
+          <SocialButton onClick={() => handleSocialLogin("google")}>
+            <img src="/assets/image/login-images/google.logo.svg" alt="google" width={20} />
+            Google
+          </SocialButton>
+          <SocialButton onClick={() => handleSocialLogin("microsoft")}>
+            <img src="/assets/image/login-images/microsoft.logo.svg" alt="microsoft" width={20} />
+            Microsoft
+          </SocialButton>
+          <SocialButton onClick={() => handleSocialLogin("apple")}>
+            <img src="/assets/image/login-images/apple.logo.svg" alt="apple" width={20} />
+            Apple
+          </SocialButton>
+          <SocialButton onClick={() => handleSocialLogin("slack")}>
+            <img src="/assets/image/login-images/slack.logo.svg" alt="slack" width={20} />
+            Slack
+          </SocialButton>
         </SocialButtons>
 
         <Links>
@@ -108,14 +118,16 @@ const Login = () => {
 
 export default Login;
 
+// Стили (без изменений)
 const MainDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(235, 239, 240);
-  height: 100vh;
+  height: 120vh;
   position: relative;
   overflow: hidden;
+  width: 100%;
 `;
 
 const RegistrDiv = styled.div`
@@ -178,8 +190,10 @@ const Links = styled.div`
 `;
 
 const ImgAt = styled.img`
+  position: absolute;
   width: 150px;
   margin: 20px 0;
+  margin-top: 490px;
 `;
 
 const FooterText = styled.span`
@@ -188,6 +202,7 @@ const FooterText = styled.span`
   font-size: 12px;
   color: gray;
   text-align: center;
+  margin-top: 40px;
 `;
 
 const ImgBg1 = styled.img`
@@ -206,8 +221,9 @@ const ImgBg2 = styled.img`
   z-index: 0;
 `;
 
- const SocialButtons= styled.div`
+const SocialButtons = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 10px;`
+  gap: 10px;
+`;
